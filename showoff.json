@@ -1,0 +1,11 @@
+
+{
+    "name" : "Donnybrook: Enabling Large-Scale, High-Speed, Peer-to-Peer Games",
+    "description" : "Ashwin Bharambe, John R. Douceur, Jacob R. Lorch, Thomas Moscibroda, Jeffrey Pang, Srinivasan Seshan, and Xinyu Zhuang",
+    "sections" : [
+        { "section" : "intro" },
+        { "section" : "background" },
+        { "section" : "structure"},
+        { "section" : "testing" }
+    ]
+}
