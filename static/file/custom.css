@@ -1,0 +1,15 @@
+.blue-title h1 {
+    color: blue;
+}
+
+li { font-size: 36px; padding: 10px; }
+li li { font-size: 22px; padding-left: 20px; }
+li li:before { content: ''; }
+
+img { padding: 20px; }
+
+.comment h6 {
+    color: blue;
+    text-align: right;
+    font-size: 22px;
+}
