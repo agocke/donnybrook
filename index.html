@@ -1,0 +1,278 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <title>Donnybrook: Enabling Large-Scale, High-Speed, Peer-to-Peer Games</title>
+
+  <link rel="stylesheet" href="./css/reset.css" type="text/css"/>
+  <link rel="stylesheet" href="./css/showoff.css" type="text/css"/>
+
+  <script type="text/javascript" src="./js/jquery-1.4.2.min.js"></script>
+  <script type="text/javascript" src="./js/jquery.cycle.all.js"></script>
+	<script type="text/javascript" src="./js/jquery-print.js"></script>
+  <script type="text/javascript" src="./js/jquery.batchImageLoad.js"></script>
+
+  <script type="text/javascript" src="./js/jquery.doubletap-0.1.js"></script>
+
+  <script type="text/javascript" src="./js/fg.menu.js"></script>
+  <script type="text/javascript" src="./js/showoff.js"></script>
+  <script type="text/javascript" src="./js/jTypeWriter.js"> </script>
+  <script type="text/javascript" src="./js/sh_main.min.js"></script>
+  <script type="text/javascript" src="./js/core.js"></script>
+  <script type="text/javascript" src="./js/showoffcore.js"></script>
+
+  <link type="text/css" href="./css/fg.menu.css" media="screen" rel="stylesheet" />
+  <link type="text/css" href="./css/theme/ui.all.css" media="screen" rel="stylesheet" />
+  <link type="text/css" href="./css/sh_style.css" rel="stylesheet" >
+
+  
+    <link rel="stylesheet" href="file/custom.css" type="text/css"/>
+  
+
+  
+    <script type="text/javascript" src="file/actions.js"></script>
+  
+
+  <script type="text/javascript">
+  $(function(){
+    setupPreso(false, './');
+  });
+  </script>
+</head>
+
+<body>
+
+
+<a tabindex="0" href="#search-engines" class="fg-button fg-button-icon-right ui-widget ui-state-default ui-corner-all" id="navmenu"><span class="ui-icon ui-icon-triangle-1-s"></span>slides</a>
+<div id="navigation" class="hidden"></div>
+
+<div id="help">
+  <table>
+    <tr><td class="key">space, &rarr;</td><td>next slide</td></tr>
+    <tr><td class="key">&larr;</td><td>previous slide</td></tr>
+    <tr><td class="key">d</td><td>debug mode</td></tr>
+    <tr><td class="key">## &lt;ret&gt;</td><td>go to slide #</td></tr>
+    <tr><td class="key">c</td><td>table of contents (vi)</td></tr>
+    <tr><td class="key">f</td><td>toggle footer</td></tr>
+    <tr><td class="key">r</td><td>reload slides</td></tr>
+    <tr><td class="key">z</td><td>toggle help (this)</td></tr>
+  </table>
+</div>
+
+<div id="preso">loading presentation...</div>
+<div id="footer">
+  <span id="slideInfo"></span>
+  <span id="debugInfo"></span>
+</div>
+
+<div id="slides" class="offscreen" style="display:none;">
+<div class="slide" data-transition="none"><div class="content blue-title" ref="intro/slide/1">
+<h1>Donnybrook</h1>
+
+<h2>Enabling Large-Scale, High-Speed, Peer-to-Peer Games</h2>
+
+<h3>Ashwin Bharambe, John R. Douceur, Jacob R. Lorch, Thomas Moscibroda, Jeffrey Pang, Srinivasan Seshan, and Xinyu Zhuang</h3></div>
+</div><div class="slide" data-transition="none"><div class="content" ref="intro/slide/2">
+<h1>Why?</h1>
+
+<ul>
+<li>Donnybrook is a real word
+
+<ul>
+<li>"A scene of uproar and disorder; a heated argument"</li>
+<li>Thanks Zach</li>
+</ul>
+</li>
+<li>Broadband connections are asymmetric</li>
+<li>Upload is the limiting factor</li>
+<li>P2P gaming is overloaded as upload approaches O(n^2)</li>
+</ul>
+</div>
+</div><div class="slide" data-transition="none"><div class="content center" ref="intro/slide/3">
+<h1>Current approaches</h1>
+
+<ul>
+<li>Area of interest filtering
+
+<ul>
+<li>Only send updates to "nearby" players</li>
+</ul>
+</li>
+<li>Dumb system&#x2014;prevents LoTR-style awesomeness
+<img src="./file/intro/returnoftheking2.JPG" width="601" height="301" alt="lotr"/></li>
+</ul>
+</div>
+</div><div class="slide" data-transition="none"><div class="content" ref="intro/slide/4">
+<h1>Focus on focus, not geography</h1>
+
+<ul>
+<li>Human attention naturally limits who we need to push updates to</li>
+<li>Problem domain: FPS games with UDP updates</li>
+<li>Use doppelg&#xE4;ngers instead&#x2014;only need periodic updates</li>
+<li>Define an <em>interest set</em> instead of an area of interest</li>
+<li>Things to watch out for: divergence, churn (avg. turnover 68%), balance</li>
+</ul>
+</div>
+</div><div class="slide" data-transition="none"><div class="content center small" ref="background/slides/1">
+<h1>Interest Sets</h1>
+
+<ul>
+<li>Only send deep information about interests</li>
+<li>Maintain interest set by sending <em>subscribe</em> packets
+to interests when they become interesting and
+<em>unsubscribe</em> when they leave</li>
+<li>Define interests as weighted sum of interest metrics
+
+<ul>
+<li><em>Proximity</em> <img src="./file/background/proximity.png" width="312" height="28" alt="proximity formula"/></li>
+<li><em>Aim</em> <img src="./file/background/aim.png" width="324" height="28" alt="aim formula"/></li>
+<li><em>Interaction Recency</em> <img src="./file/background/interaction_recency.png" width="258" height="55" alt="interaction recency"/></li>
+</ul>
+</li>
+</ul>
+</div>
+</div><div class="slide" data-transition="none"><div class="content bullets" ref="background/slides/2">
+<h1>Interest Weighting</h1>
+
+<ul>
+<li>each metric has different units so it needs different weights</li>
+<li>e.g., snipers don't care about proximity</li>
+<li>see workshop paper for more info</li>
+</ul>
+</div>
+</div><div class="slide" data-transition="none"><div class="content" ref="structure/slides/1">
+<h1>Doppelg&#xE4;nger and messaging</h1></div>
+</div><div class="slide" data-transition="none"><div class="content" ref="structure/slides/2">
+<ul>
+<li>AI bot uses guidance to move to locations smoothly</li>
+<li>All players update non-interested players with "guidance" for
+their doppelg&#xE4;ngers once every second</li>
+<li>New growth factor: <img src="./file/structure/growth.png" width="82" height="43" alt="Adjusted Growth Factor"/></li>
+<li>Low bandwidth peers are balanced by high capacity peers</li>
+</ul>
+</div>
+</div><div class="slide" data-transition="none"><div class="content center" ref="structure/slides/3">
+<h2>Effect of forwarding on latency</h2>
+
+<p><img src="./file/structure/latency.png" width="737" height="302" alt="Latency graph from forwarding"/>
+&lt;n% = message goes through forwarder in the &lt;n% quartile</p></div>
+</div><div class="slide" data-transition="none"><div class="content bullets incremental comment" ref="structure/slides/4">
+<ul>
+<li>Forwarding multicast tree is based on sources</li>
+<li>Trees are short-lived and probabalistic</li>
+<li>The forwarding pool is chosen at the beginning of the game by
+peers that have latency and bandwidth above a threshold</li>
+<li>A byte in guidance packets updates peers to their forwarding
+capacity (half of total to prevent queuing delay and collisions)</li>
+<li>collision likelihood is reduced by increasing capacity
+
+<ul>
+<li><h6>would have liked to see some math here</h6></li>
+</ul>
+</li>
+</ul>
+</div>
+</div><div class="slide" data-transition="none"><div class="content command" ref="structure/slides/5">
+<h1>Guidance</h1></div>
+</div><div class="slide" data-transition="none"><div class="content center comment smbullets smaller" ref="structure/slides/6">
+<h1>Forwarding</h1>
+
+<ul>
+<li><em>fan-in</em> = number of sources it can forward for
+<img src="./file/structure/fan-in.png" width="346" height="34" alt="Fan-in"/></li>
+<li>s = guidance size</li>
+<li>p = guidance period</li>
+<li>b = rate limit</li>
+<li>r = bandwidth set aside for non-guidance</li>
+<li>n = player count</li>
+<li><p>h = header size</p></li>
+<li><p>Wait for 3s timeout on guidance timeout to detect forwarder
+  drop-out</p>
+
+<ul>
+<li><h6>3s is a long time, does no one really notice?</h6></li>
+</ul>
+</li>
+</ul>
+</div>
+</div><div class="slide" data-transition="none"><div class="content smbullets center" ref="testing/slides/1">
+<h2>UX Testing</h2>
+
+<ul>
+<li>tested 3 scenarios: LoBW, LoBW-IS, HiBW</li>
+<li>LoBW-IW has subscriber set size = 4</li>
+<li><img src="./file/testing/bw-comp.png" width="536" height="422" alt="bandwidth"/></li>
+</ul>
+</div>
+</div><div class="slide" data-transition="none"><div class="content full-size center" ref="testing/slides/2">
+<h1>Network performance</h1>
+
+<p><img src="./file/testing/fig-6-7.png" width="406" height="359" alt=""/></p></div>
+</div><div class="slide" data-transition="none"><div class="content center bullets" ref="testing/slides/3">
+<h1>Scalability</h1>
+
+<p><img src="./file/testing/fig-8.png" width="843" height="330" alt="scaling tests"/></p>
+
+<ul>
+<li>"We consider a scale n to be achievable if a randomly selected set of n machines has prob- ability &#x2265; 99.5% of satisfying the initial feasibility test per- formed by the matchmaking service"</li>
+</ul>
+</div>
+</div><div class="slide" data-transition="none"><div class="content center" ref="testing/slides/4">
+<h1>Performance?</h1>
+
+<p><img src="./file/testing/scalable-perf.png" width="511" height="464" alt="performance"/></p></div>
+</div><div class="slide" data-transition="none"><div class="content center" ref="testing/slides/5">
+<h1>Subscriber set size</h1>
+
+<p><img src="./file/testing/sub-set-size.png" width="564" height="310" alt="subscriber set size"/></p></div>
+</div><div class="slide" data-transition="none"><div class="content bullets" ref="testing/slides/6">
+<h1>Churn</h1>
+
+<ul>
+<li>Not a problem&#x2014;performance within confidence interval</li>
+</ul>
+</div>
+</div><div class="slide" data-transition="none"><div class="content bullets" ref="testing/slides/7">
+<h1>Forwarding Pool</h1>
+
+<ul>
+<li>Greatly underutilized</li>
+<li>Only needs about 20Kb/s per player</li>
+<li>Fails without pool</li>
+</ul>
+</div>
+</div><div class="slide" data-transition="none"><div class="content bullets" ref="testing/slides/8">
+<h1>Alternate Strategies</h1>
+
+<ul>
+<li>they suck</li>
+</ul>
+</div>
+</div><div class="slide" data-transition="none"><div class="content bullets" ref="testing/slides/9">
+<h1>Scaling up the interest set size</h1>
+
+<ul>
+<li><img src="./file/testing/set-size-scale.png" width="572" height="256" alt="interest set size scale"/></li>
+</ul>
+</div>
+</div><div class="slide" data-transition="none"><div class="content bullets comment" ref="testing/slides/10">
+<h1>Variable fidelity</h1>
+
+<ul>
+<li>"The most important difference between these techniques and Donnybrook is that while the former strictly bound error and produce unpredictable and modest bandwidth reductions, Donnybrook reduces bandwidth by a large, predictable factor while allowing unbounded error. This is tolerable because we only reduce fidelity for objects the receiver is not paying attention to. Our techniques can cause inconsistent views across players, but we comfortably ignore this divergence because our user studies confirm that the game remains enjoyable."
+
+<ul>
+<li><h6>Perhaps insufficiently supported by testing...</h6></li>
+</ul>
+</li>
+</ul>
+</div>
+</div><div class="slide" data-transition="none"><div class="content center command" ref="testing/slides/11">
+<h1>applause</h1></div>
+</div>
+</div>
+
+</body>
+</html>
